@@ -106,3 +106,105 @@
 [20](https://www.familynet.or.kr/download.do?uuid=14f30dba-8d31-43e2-8f1d-ff367cb282ec.pdf)
 [21](https://elaw.klri.re.kr/eng_service/lawView.do?hseq=39955&lang=ENG)
 [22](https://www.law.go.kr/LSW/unSc.do?query=%ED%91%9C%EC%A4%80%EC%9E%84%EB%8C%80%EC%B0%A8%EA%B3%84%EC%95%BD%EC%84%9C&tabMenuId=tab81&section=licTotalByl)
+
+
+
+
+전세계약 흐름·분기 UX에 바로 쓸 수 있는 **리액트 플로우/분기 라이브러리**를 위주로 정리하면 아래처럼 쓸 수 있다.[1][2]
+
+## 1. 노드·플로우차트용 (가장 추천)
+
+### React Flow
+- 특징: **가장 활발한 생태계 + 대형 프로젝트에서 많이 사용**되는 노드 기반/플로우 에디터.[3][1]
+- 장점  
+  - 드래그·줌·노드/엣지 커스텀, 미니맵, 컨트롤 패널 등 기본 제공.[1]
+  - 전세 위험 플로우, 권리관계 그래프, 계약 절차 플로우를 모두 표현 가능.  
+- 설치
+  ```bash
+  npm install reactflow
+  ```
+- 예시
+  ```tsx
+  import ReactFlow from 'reactflow';
+  import 'reactflow/dist/style.css';
+
+  const nodes = [{ id: '1', position: { x: 0, y: 0 }, data: { label: '전세 시작' } }];
+  const edges = [];
+
+  export default () => <ReactFlow nodes={nodes} edges={edges} />;
+  ```
+[4][1]
+
+### flowchart-react
+- 특징: **가벼운 플로우차트 디자이너**로, 노드 추가/삭제·연결·줌 등 기본 기능 제공.[2][5]
+- 설치
+  ```bash
+  npm install flowchart-react
+  ```
+- 예시
+  ```tsx
+  import Flowchart from 'flowchart-react';
+  // nodes, connections 상태로 관리 후 <Flowchart ... /> 렌더
+  ```[5]
+
+### react-flow-chart (MrBlenny)
+- 특징: 선언적 플로우차트 라이브러리, 드래그·줌·커스텀 노드 지원.[6][2]
+- 장점: 상태를 직접 들고 가는 구조라 “저장 가능한 전세 의사결정 플로우 편집기” 만들기에 적합.
+
+***
+
+## 2. 의사결정/분기(Decision Tree) 특화
+
+### react-decision-tree-flow
+- 특징: **단계별 질문–분기형 위저드** 만들기에 특화된 라이브러리.[7][8]
+- 사용 예:  
+  - “이 전세 들어가도 되나요?” YES/NO 플로우를 단계별로 안내하는 UI.  
+- 개념
+  ```ts
+  const tree = {
+    step1: ['step2', 'step3'],
+    step2: ['step3'],
+    step3: [],
+  } as const;
+  ```
+  이런 트리 구조를 넘기고 `<Wizard>` 안에 각 Step 컴포넌트를 정의.[7]
+
+***
+
+## 3. 상용/무거운 옵션 (필요시)
+
+### Syncfusion React Diagram – Flowchart
+- 특징: 기업용 **풍부한 다이어그램/플로우차트 컴포넌트**, 도형·커넥터·레이아웃 다양.[9]
+- 장점: 바로 쓸 수 있는 도형/템플릿이 많아 관리 화면, 어드민용에 좋음.
+
+***
+
+## 4. 어떤 걸 쓰면 좋은지
+
+- **전세 사기 방지용 “플로우 + 그래프 + 인터랙션”**이 필요하므로:
+  - 메인: **React Flow** 추천 (가장 유연하고 예제가 많음).[4][1]
+  - 단순 YES/NO 질문 위저드: `react-decision-tree-flow` 서브로 사용.[7]
+
+원하면, React Flow 기준으로  
+- “전세 위험 체크 플로우(노드 구조 + 예시 코드)”를 바로 쓸 수 있게 설계해 줄 수 있다.
+
+[1](https://reactflow.dev)
+[2](https://medevel.com/js-flowchart-react-1673/)
+[3](https://madewithreactjs.com/react-flow)
+[4](https://reactflow.dev/examples)
+[5](https://github.com/joyceworks/flowchart-react)
+[6](https://github.com/MrBlenny/react-flow-chart)
+[7](https://github.com/rjerue/react-decision-tree-flow)
+[8](https://www.npmjs.com/package/react-decision-tree-flow/v/0.9.8?activeTab=readme)
+[9](https://www.syncfusion.com/react-components/react-diagram/flowchart)
+[10](https://www.reddit.com/r/reactjs/comments/xo9qtj/react_library_to_create_dynamic_flowcharts/)
+[11](https://github.com/qix-/node-editor)
+[12](https://libraries.io/npm/treege)
+[13](https://stackoverflow.com/questions/72164885/tools-for-building-a-graph-node-based-user-interface-in-a-webapp)
+[14](https://www.reddit.com/r/react/comments/1adr2hg/looking_for_recommendations_on_the_best_flowchart/)
+[15](https://www.reddit.com/r/reactjs/comments/u894mi/looking_for_node_editor_gui_logic_block_editor/)
+[16](https://www.jsdelivr.com/package/npm/react-decision-tree-flow)
+[17](https://ably.com/blog/top-react-chart-libraries)
+[18](https://www.reddit.com/r/dotnet/comments/1bre0z0/opensource_library_suggestions_for_node_based/)
+[19](https://codesandbox.io/examples/package/react-decision-tree-flow)
+[20](https://www.npmjs.com/package/reactflow)

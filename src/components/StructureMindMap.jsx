@@ -10,122 +10,102 @@ import {
 import '@xyflow/react/dist/style.css';
 import './StructureMindMap.css';
 
-const CustomNode = ({ data }) => {
-    const getNodeClass = () => {
-        switch (data.nodeType) {
-            case 'center': return 'node-center';
-            case 'primary': return 'node-primary';
-            case 'safe': return 'node-safe';
-            case 'warning': return 'node-warning';
-            case 'danger': return 'node-danger';
-            default: return 'node-neutral';
-        }
-    };
+// 통합 네트워크 노드
+const CenterNode = ({ data }) => (
+    <div className="network-node center">
+        <Handle type="source" position={Position.Top} style={{ opacity: 0 }} />
+        <Handle type="source" position={Position.Bottom} style={{ opacity: 0 }} />
+        <Handle type="source" position={Position.Left} style={{ opacity: 0 }} />
+        <Handle type="source" position={Position.Right} style={{ opacity: 0 }} />
+        <span>{data.label}</span>
+    </div>
+);
 
-    return (
-        <div className={`custom-node ${getNodeClass()}`}>
-            <Handle type="target" position={Position.Top} style={{ opacity: 0 }} />
-            <Handle type="target" position={Position.Left} style={{ opacity: 0 }} />
-            <Handle type="target" position={Position.Right} style={{ opacity: 0 }} />
-            <Handle type="target" position={Position.Bottom} style={{ opacity: 0 }} />
-            {data.label}
-            <Handle type="source" position={Position.Top} style={{ opacity: 0 }} />
-            <Handle type="source" position={Position.Left} style={{ opacity: 0 }} />
-            <Handle type="source" position={Position.Right} style={{ opacity: 0 }} />
-            <Handle type="source" position={Position.Bottom} style={{ opacity: 0 }} />
-        </div>
-    );
+const PrimaryNode = ({ data }) => (
+    <div className={`network-node primary ${data.type || ''}`}>
+        <Handle type="target" position={Position.Top} style={{ opacity: 0 }} />
+        <Handle type="target" position={Position.Bottom} style={{ opacity: 0 }} />
+        <Handle type="target" position={Position.Left} style={{ opacity: 0 }} />
+        <Handle type="target" position={Position.Right} style={{ opacity: 0 }} />
+        <Handle type="source" position={Position.Top} id="top" style={{ opacity: 0 }} />
+        <Handle type="source" position={Position.Bottom} id="bottom" style={{ opacity: 0 }} />
+        <Handle type="source" position={Position.Left} id="left" style={{ opacity: 0 }} />
+        <Handle type="source" position={Position.Right} id="right" style={{ opacity: 0 }} />
+        <span>{data.label}</span>
+    </div>
+);
+
+const DetailNode = ({ data }) => (
+    <div className={`network-node detail ${data.status || ''}`}>
+        <Handle type="target" position={Position.Top} style={{ opacity: 0 }} />
+        <Handle type="target" position={Position.Bottom} style={{ opacity: 0 }} />
+        <Handle type="target" position={Position.Left} style={{ opacity: 0 }} />
+        <Handle type="target" position={Position.Right} style={{ opacity: 0 }} />
+        <span>{data.label}</span>
+    </div>
+);
+
+const nodeTypes = {
+    center: CenterNode,
+    primary: PrimaryNode,
+    detail: DetailNode,
 };
-
-const nodeTypes = { custom: CustomNode };
 
 const StructureMindMap = ({ mindMapData }) => {
     const { initialNodes, initialEdges } = useMemo(() => {
-        const nodes = [];
-        const edges = [];
+        const nodes = [
+            // 중앙 노드 (부동산)
+            { id: 'property', type: 'center', position: { x: 350, y: 200 }, data: { label: mindMapData.center.label } },
 
-        nodes.push({
-            id: 'center',
-            type: 'custom',
-            position: { x: 300, y: 180 },
-            data: { label: mindMapData.center.label, nodeType: 'center' },
-        });
+            // 1차 노드 (주요 관계자)
+            { id: 'landlord', type: 'primary', position: { x: 100, y: 50 }, data: { label: '임대인', type: 'person' } },
+            { id: 'tenant', type: 'primary', position: { x: 600, y: 50 }, data: { label: '임차인', type: 'person' } },
+            { id: 'agent', type: 'primary', position: { x: 100, y: 350 }, data: { label: '중개사', type: 'org' } },
+            { id: 'insurance', type: 'primary', position: { x: 600, y: 350 }, data: { label: '보증기관', type: 'org' } },
 
-        const primaryPositions = [
-            { x: 80, y: 40 },
-            { x: 520, y: 40 },
-            { x: 560, y: 180 },
-            { x: 520, y: 320 },
-            { x: 80, y: 320 },
+            // 2차 노드 (세부 정보)
+            { id: 'owner-status', type: 'detail', position: { x: 0, y: 0 }, data: { label: '실소유자 확인', status: 'safe' } },
+            { id: 'mortgage', type: 'detail', position: { x: 0, y: 100 }, data: { label: '근저당 2억', status: 'warning' } },
+
+            { id: 'deposit', type: 'detail', position: { x: 700, y: 0 }, data: { label: '보증금 3.5억', status: 'neutral' } },
+            { id: 'move-in', type: 'detail', position: { x: 700, y: 100 }, data: { label: '전입신고 필수', status: 'danger' } },
+
+            { id: 'license', type: 'detail', position: { x: 0, y: 300 }, data: { label: '중개사 등록 확인', status: 'safe' } },
+
+            { id: 'hug', type: 'detail', position: { x: 700, y: 300 }, data: { label: 'HUG 미가입', status: 'danger' } },
+            { id: 'sgi', type: 'detail', position: { x: 700, y: 400 }, data: { label: 'SGI 미가입', status: 'danger' } },
+
+            // 부동산 세부
+            { id: 'market', type: 'detail', position: { x: 350, y: 350 }, data: { label: '시세 9억', status: 'neutral' } },
+            { id: 'ratio', type: 'detail', position: { x: 350, y: 420 }, data: { label: '전세가율 41%', status: 'safe' } },
         ];
 
-        mindMapData.primaryNodes.forEach((node, index) => {
-            nodes.push({
-                id: node.id,
-                type: 'custom',
-                position: primaryPositions[index],
-                data: { label: node.label, nodeType: 'primary' },
-            });
+        const edges = [
+            // 중앙 → 1차
+            { id: 'e-p-landlord', source: 'property', target: 'landlord', type: 'straight', style: { stroke: '#64748b', strokeWidth: 2 } },
+            { id: 'e-p-tenant', source: 'property', target: 'tenant', type: 'straight', style: { stroke: '#64748b', strokeWidth: 2 } },
+            { id: 'e-p-agent', source: 'property', target: 'agent', type: 'straight', style: { stroke: '#64748b', strokeWidth: 2 } },
+            { id: 'e-p-insurance', source: 'property', target: 'insurance', type: 'straight', style: { stroke: '#64748b', strokeWidth: 2 } },
 
-            edges.push({
-                id: `edge-center-${node.id}`,
-                source: 'center',
-                target: node.id,
-                type: 'straight',
-                style: { stroke: '#64748b', strokeWidth: 2 },
-            });
-        });
+            // 임대인 세부
+            { id: 'e-l-owner', source: 'landlord', target: 'owner-status', type: 'straight', style: { stroke: '#22c55e', strokeWidth: 1.5 } },
+            { id: 'e-l-mort', source: 'landlord', target: 'mortgage', type: 'straight', style: { stroke: '#f59e0b', strokeWidth: 1.5 } },
 
-        const secondaryOffsets = {
-            landlord: [{ x: -100, y: -50 }, { x: -100, y: 20 }],
-            tenant: [{ x: 100, y: -50 }, { x: 100, y: 20 }],
-            insurance: [{ x: -100, y: -20 }, { x: -100, y: 50 }],
-        };
+            // 임차인 세부
+            { id: 'e-t-dep', source: 'tenant', target: 'deposit', type: 'straight', style: { stroke: '#94a3b8', strokeWidth: 1.5 } },
+            { id: 'e-t-move', source: 'tenant', target: 'move-in', type: 'straight', style: { stroke: '#ef4444', strokeWidth: 1.5 } },
 
-        Object.entries(mindMapData.secondaryNodes).forEach(([parentId, children]) => {
-            if (parentId === 'property') return;
-            const parentNode = nodes.find(n => n.id === parentId);
-            if (!parentNode) return;
+            // 중개사 세부
+            { id: 'e-a-lic', source: 'agent', target: 'license', type: 'straight', style: { stroke: '#22c55e', strokeWidth: 1.5 } },
 
-            const offsets = secondaryOffsets[parentId] || [];
-            children.forEach((child, index) => {
-                const offset = offsets[index] || { x: 0, y: (index + 1) * 50 };
-                nodes.push({
-                    id: child.id,
-                    type: 'custom',
-                    position: { x: parentNode.position.x + offset.x, y: parentNode.position.y + offset.y },
-                    data: { label: child.label, nodeType: child.status },
-                });
+            // 보증기관 세부
+            { id: 'e-i-hug', source: 'insurance', target: 'hug', type: 'straight', style: { stroke: '#ef4444', strokeWidth: 1.5 } },
+            { id: 'e-i-sgi', source: 'insurance', target: 'sgi', type: 'straight', style: { stroke: '#ef4444', strokeWidth: 1.5 } },
 
-                const edgeColor = child.status === 'danger' ? '#ef4444' : child.status === 'safe' ? '#22c55e' : '#94a3b8';
-                edges.push({
-                    id: `edge-${parentId}-${child.id}`,
-                    source: parentId,
-                    target: child.id,
-                    type: 'straight',
-                    style: { stroke: edgeColor, strokeWidth: 2 },
-                });
-            });
-        });
-
-        const propertyChildren = mindMapData.secondaryNodes.property || [];
-        propertyChildren.forEach((child, index) => {
-            nodes.push({
-                id: child.id,
-                type: 'custom',
-                position: { x: 300, y: 290 + index * 45 },
-                data: { label: child.label, nodeType: child.status },
-            });
-
-            const edgeColor = child.status === 'safe' ? '#22c55e' : '#94a3b8';
-            edges.push({
-                id: `edge-center-${child.id}`,
-                source: 'center',
-                target: child.id,
-                type: 'straight',
-                style: { stroke: edgeColor, strokeWidth: 2 },
-            });
-        });
+            // 부동산 세부
+            { id: 'e-p-market', source: 'property', target: 'market', type: 'straight', style: { stroke: '#94a3b8', strokeWidth: 1.5 } },
+            { id: 'e-p-ratio', source: 'property', target: 'ratio', type: 'straight', style: { stroke: '#22c55e', strokeWidth: 1.5 } },
+        ];
 
         return { initialNodes: nodes, initialEdges: edges };
     }, [mindMapData]);
@@ -142,7 +122,7 @@ const StructureMindMap = ({ mindMapData }) => {
                         <path d="M12 2v4m0 12v4M2 12h4m12 0h4" />
                     </svg>
                 </div>
-                <h2 className="card-title">전세 구조 마인드맵</h2>
+                <h2 className="card-title">전세 구조 및 계약 관계 네트워크</h2>
                 <div className="legend">
                     <span className="legend-item"><span className="dot safe"></span>안전</span>
                     <span className="legend-item"><span className="dot warning"></span>주의</span>
@@ -159,7 +139,7 @@ const StructureMindMap = ({ mindMapData }) => {
                     fitView
                     proOptions={{ hideAttribution: true }}
                 >
-                    <Background color="#e2e8f0" gap={20} />
+                    <Background color="#f1f5f9" gap={20} />
                 </ReactFlow>
             </div>
         </div>

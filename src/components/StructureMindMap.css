@@ -2,6 +2,10 @@
     grid-column: span 2;
 }
 
+.mindmap-card .card-header {
+    justify-content: flex-start;
+}
+
 .mindmap-card .legend {
     display: flex;
     gap: var(--space-3);
@@ -35,56 +39,75 @@
 }
 
 .mindmap-flow {
-    height: 380px;
+    height: 450px;
     background: var(--bg-secondary);
     border-radius: var(--radius-md);
     overflow: hidden;
 }
 
-.custom-node {
+/* 네트워크 노드 스타일 */
+.network-node {
     padding: var(--space-2) var(--space-3);
     border-radius: var(--radius-md);
     font-size: var(--font-size-xs);
     font-weight: 500;
     white-space: nowrap;
+    text-align: center;
 }
 
-.node-center {
+.network-node.center {
+    padding: var(--space-3) var(--space-5);
     background: var(--accent-primary);
     color: white;
-    padding: var(--space-3) var(--space-4);
     font-size: var(--font-size-sm);
     font-weight: 600;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
-.node-primary {
-    background: #dbeafe;
-    border: 1px solid #93c5fd;
-    color: #1e40af;
+.network-node.primary {
+    background: #1e3a5f;
+    color: white;
+    padding: var(--space-2) var(--space-4);
 }
 
-.node-safe {
-    background: var(--color-success-light);
-    border: 1px solid #86efac;
-    color: var(--color-success);
+.network-node.primary.person {
+    border: 2px solid #60a5fa;
 }
 
-.node-warning {
-    background: var(--color-warning-light);
-    border: 1px solid #fcd34d;
+.network-node.primary.org {
+    border: 2px solid #a78bfa;
+}
+
+.network-node.detail {
+    background: white;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-size: 11px;
+}
+
+.network-node.detail.safe {
+    background: #dcfce7;
+    border-color: #86efac;
+    color: #16a34a;
+}
+
+.network-node.detail.warning {
+    background: #fef3c7;
+    border-color: #fcd34d;
     color: #b45309;
 }
 
-.node-danger {
-    background: var(--color-danger-light);
-    border: 1px solid #fca5a5;
-    color: var(--color-danger);
+.network-node.detail.danger {
+    background: #fee2e2;
+    border-color: #fca5a5;
+    color: #dc2626;
 }
 
-.node-neutral {
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
+.network-node.detail.neutral {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #64748b;
 }
 
 @media (max-width: 768px) {
@@ -93,6 +116,6 @@
     }
 
     .mindmap-flow {
-        height: 300px;
+        height: 350px;
     }
 }
