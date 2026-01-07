@@ -1,19 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ContractSummaryCard from './components/ContractSummaryCard';
 import RiskScoreIndicator from './components/RiskScoreIndicator';
 import ContractFlowchart from './components/ContractFlowchart';
-import StructureMindMap from './components/StructureMindMap';
+import NetworkVisualization from './components/NetworkVisualization';
 import ContractTimeline from './components/ContractTimeline';
 import RightsStackChart from './components/RightsStackChart';
+import RiskCheckWizard from './components/RiskCheckWizard';
+import JeonseGaugeChart from './components/JeonseGaugeChart';
+import VisualContractCard from './components/VisualContractCard';
+import StructureReferencePage from './components/StructureReferencePage';
+import FraudCaseVisualization from './components/FraudCaseVisualization';
+import ResponsibilityMatrix from './components/ResponsibilityMatrix';
+import AIQAPanel from './components/AIQAPanel';
 import { sampleContract, timelineEvents, mindMapNodes } from './data/sampleContract';
 import './App.css';
 
 function App() {
+    const [currentPage, setCurrentPage] = useState('main');
+
+    if (currentPage === 'reference') {
+        return (
+            <div className="app">
+                <nav className="top-nav">
+                    <button className="nav-btn" onClick={() => setCurrentPage('main')}>
+                        ← 메인으로
+                    </button>
+                    <span className="nav-title">설계 구조 및 레퍼런스</span>
+                </nav>
+                <StructureReferencePage />
+            </div>
+        );
+    }
+
     return (
         <div className="app">
             <header className="header">
                 <h1>전월세 계약서 시각화</h1>
                 <p>계약 정보를 한눈에 파악하고, 잠재적 리스크를 사전에 분석합니다</p>
+                <button className="ref-link-btn" onClick={() => setCurrentPage('reference')}>
+                    📐 설계 구조 및 레퍼런스 보기 →
+                </button>
             </header>
 
             <main className="container">
@@ -26,13 +52,30 @@ function App() {
                 </section>
 
                 <section className="section">
+                    <h2 className="section-title">Visual Contract 요약</h2>
+                    <VisualContractCard contract={sampleContract} />
+                </section>
+
+                <section className="section">
+                    <h2 className="section-title">전세 위험 분석</h2>
+                    <div className="grid grid-cols-2">
+                        <RiskCheckWizard />
+                        <JeonseGaugeChart
+                            ratio={sampleContract.jeonseRatio || 41}
+                            marketPrice={sampleContract.marketPrice || 900000000}
+                            deposit={sampleContract.deposit || 350000000}
+                        />
+                    </div>
+                </section>
+
+                <section className="section">
                     <h2 className="section-title">계약 프로세스</h2>
                     <ContractFlowchart />
                 </section>
 
                 <section className="section">
                     <h2 className="section-title">전세 구조 분석</h2>
-                    <StructureMindMap mindMapData={mindMapNodes} />
+                    <NetworkVisualization mindMapData={mindMapNodes} />
                 </section>
 
                 <section className="section">
@@ -71,6 +114,21 @@ function App() {
                             </div>
                         </div>
                     </div>
+                </section>
+
+                <section className="section">
+                    <h2 className="section-title">전세 사기 사례 분석</h2>
+                    <FraudCaseVisualization />
+                </section>
+
+                <section className="section">
+                    <h2 className="section-title">당사자별 책임</h2>
+                    <ResponsibilityMatrix />
+                </section>
+
+                <section className="section">
+                    <h2 className="section-title">AI 계약 분석 상담</h2>
+                    <AIQAPanel contract={sampleContract} />
                 </section>
             </main>
 

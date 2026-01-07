@@ -1,0 +1,143 @@
+.responsibility-matrix {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    box-shadow: var(--shadow-md);
+}
+
+.matrix-container {
+    overflow-x: auto;
+    margin: var(--space-4) 0;
+}
+
+.matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+}
+
+.matrix-table th {
+    background: #f1f5f9;
+    padding: var(--space-3);
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.matrix-table th.task-col {
+    text-align: left;
+    min-width: 140px;
+}
+
+.matrix-table th.deadline-col {
+    min-width: 140px;
+}
+
+.matrix-table td {
+    padding: var(--space-3);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.task-name {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.check-cell {
+    text-align: center;
+}
+
+.check {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+}
+
+.check.active {
+    background: #dcfce7;
+    color: #22c55e;
+}
+
+.check.inactive {
+    background: #f1f5f9;
+    color: #94a3b8;
+}
+
+.check.joint {
+    background: #dbeafe;
+    color: #3b82f6;
+}
+
+.check.guarantor {
+    background: #f3e8ff;
+    color: #9333ea;
+    width: auto;
+    padding: 0 var(--space-2);
+    font-size: var(--font-size-xs);
+}
+
+.deadline {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.matrix-legend {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-5);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border-color);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.legend-color.high {
+    background: #dc2626;
+}
+
+.legend-color.medium {
+    background: #f59e0b;
+}
+
+.legend-color.low {
+    background: #22c55e;
+}
+
+.matrix-bg {
+    background: linear-gradient(135deg, #8b5cf6, #6366f1) !important;
+}
+
+@media (max-width: 768px) {
+    .matrix-table {
+        font-size: var(--font-size-xs);
+    }
+
+    .matrix-table th,
+    .matrix-table td {
+        padding: var(--space-2);
+    }
+
+    .check {
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+    }
+}

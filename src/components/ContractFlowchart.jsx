@@ -27,15 +27,17 @@ const StartEndNode = ({ data }) => (
 // 프로세스 노드
 const ProcessNode = ({ data }) => (
     <div className={`flow-node process ${data.status || ''}`}>
-        <Handle type="target" position={Position.Top} style={{ opacity: 0 }} />
-        <Handle type="target" position={Position.Left} style={{ opacity: 0 }} />
+        <Handle type="target" position={Position.Top} id="top" style={{ opacity: 0 }} />
+        <Handle type="target" position={Position.Left} id="left" style={{ opacity: 0 }} />
+        <Handle type="target" position={Position.Right} id="right" style={{ opacity: 0 }} />
         <div className="node-content">
             {data.icon && <span className="node-icon">{data.icon}</span>}
             <span className="node-label">{data.label}</span>
             {data.sublabel && <span className="node-sublabel">{data.sublabel}</span>}
         </div>
-        <Handle type="source" position={Position.Bottom} style={{ opacity: 0 }} />
-        <Handle type="source" position={Position.Right} style={{ opacity: 0 }} />
+        <Handle type="source" position={Position.Bottom} id="bottom" style={{ opacity: 0 }} />
+        <Handle type="source" position={Position.Left} id="left" style={{ opacity: 0 }} />
+        <Handle type="source" position={Position.Right} id="right" style={{ opacity: 0 }} />
     </div>
 );
 
@@ -81,49 +83,53 @@ const MainContractFlow = () => {
     const { nodes: initialNodes, edges: initialEdges } = useMemo(() => {
         const nodes = [
             // 시작
-            { id: 'start', type: 'startEnd', position: { x: 300, y: 0 }, data: { label: '계약 시작', type: 'start' } },
+            { id: 'start', type: 'startEnd', position: { x: 350, y: 0 }, data: { label: '계약 시작', type: 'start' } },
 
             // Phase 1: 사전 조사
-            { id: 'g1', type: 'group', position: { x: 50, y: 60 }, data: { label: '1단계: 사전 조사' } },
-            { id: 'p1-1', type: 'process', position: { x: 100, y: 100 }, data: { label: '매물 탐색', sublabel: '부동산 앱/중개' } },
-            { id: 'p1-2', type: 'process', position: { x: 280, y: 100 }, data: { label: '등기부등본 열람', sublabel: '인터넷등기소' } },
-            { id: 'p1-3', type: 'process', position: { x: 460, y: 100 }, data: { label: '시세 확인', sublabel: 'KB/호갱노노' } },
+            { id: 'g1', type: 'group', position: { x: 50, y: 70 }, data: { label: '1단계: 사전 조사' } },
+            { id: 'p1-1', type: 'process', position: { x: 150, y: 70 }, data: { label: '매물 탐색', sublabel: '부동산 앱/중개' } },
+            { id: 'p1-2', type: 'process', position: { x: 320, y: 70 }, data: { label: '등기부등본 열람', sublabel: '인터넷등기소' } },
+            { id: 'p1-3', type: 'process', position: { x: 520, y: 70 }, data: { label: '시세 확인', sublabel: 'KB/호갱노노' } },
 
             // 분기 1: 소유자 확인
-            { id: 'd1', type: 'decision', position: { x: 280, y: 200 }, data: { label: '소유자 일치?' } },
-            { id: 'r1-fail', type: 'result', position: { x: 500, y: 220 }, data: { label: '계약 중단', status: 'danger' } },
+            { id: 'd1', type: 'decision', position: { x: 350, y: 170 }, data: { label: '소유자 일치?' } },
+            { id: 'r1-fail', type: 'result', position: { x: 550, y: 180 }, data: { label: '계약 중단', status: 'danger' } },
 
             // Phase 2: 계약 체결
-            { id: 'g2', type: 'group', position: { x: 50, y: 300 }, data: { label: '2단계: 계약 체결' } },
-            { id: 'p2-1', type: 'process', position: { x: 100, y: 340 }, data: { label: '계약서 작성', sublabel: '표준계약서' } },
-            { id: 'p2-2', type: 'process', position: { x: 280, y: 340 }, data: { label: '특약사항 검토', sublabel: 'AI 위험분석', status: 'highlight' } },
-            { id: 'p2-3', type: 'process', position: { x: 460, y: 340 }, data: { label: '계약금 지급', sublabel: '10%' } },
+            { id: 'g2', type: 'group', position: { x: 50, y: 280 }, data: { label: '2단계: 계약 체결' } },
+            { id: 'p2-1', type: 'process', position: { x: 150, y: 280 }, data: { label: '계약서 작성', sublabel: '표준계약서' } },
+            { id: 'p2-2', type: 'process', position: { x: 320, y: 280 }, data: { label: '특약사항 검토', sublabel: 'AI 위험분석', status: 'highlight' } },
+            { id: 'p2-3', type: 'process', position: { x: 520, y: 280 }, data: { label: '계약금 지급', sublabel: '10%' } },
 
             // 분기 2: 전세가율 확인
-            { id: 'd2', type: 'decision', position: { x: 280, y: 440 }, data: { label: '전세가율 80% 이하?' } },
-            { id: 'r2-warn', type: 'result', position: { x: 500, y: 460 }, data: { label: '고위험 경고', status: 'warning' } },
+            { id: 'd2', type: 'decision', position: { x: 350, y: 380 }, data: { label: '전세가율 80%' } },
+            { id: 'r2-warn', type: 'result', position: { x: 550, y: 390 }, data: { label: '고위험 경고', status: 'warning' } },
 
             // Phase 3: 잔금/입주
-            { id: 'g3', type: 'group', position: { x: 50, y: 540 }, data: { label: '3단계: 잔금 및 입주' } },
-            { id: 'p3-1', type: 'process', position: { x: 100, y: 580 }, data: { label: '잔금 지급', sublabel: '90%' } },
-            { id: 'p3-2', type: 'process', position: { x: 280, y: 580 }, data: { label: '전입신고', sublabel: '당일 필수', status: 'important' } },
-            { id: 'p3-3', type: 'process', position: { x: 460, y: 580 }, data: { label: '확정일자', sublabel: '당일 필수', status: 'important' } },
+            { id: 'g3', type: 'group', position: { x: 50, y: 490 }, data: { label: '3단계: 잔금 및 입주' } },
+            { id: 'p3-1', type: 'process', position: { x: 150, y: 490 }, data: { label: '잔금 지급', sublabel: '90%' } },
+            { id: 'p3-2', type: 'process', position: { x: 320, y: 490 }, data: { label: '전입신고', sublabel: '당일 필수', status: 'important' } },
+            { id: 'p3-3', type: 'process', position: { x: 520, y: 490 }, data: { label: '확정일자', sublabel: '당일 필수', status: 'important' } },
 
             // 분기 3: 보증보험
-            { id: 'd3', type: 'decision', position: { x: 280, y: 680 }, data: { label: '보증보험 가입?' } },
-            { id: 'p3-4', type: 'process', position: { x: 80, y: 720 }, data: { label: 'HUG/SGI 가입', sublabel: '보증금 보호', status: 'safe' } },
-            { id: 'r3-risk', type: 'result', position: { x: 480, y: 720 }, data: { label: '미가입 위험', status: 'warning' } },
+            { id: 'd3', type: 'decision', position: { x: 350, y: 590 }, data: { label: '보증보험 가입?' } },
+            { id: 'p3-4', type: 'process', position: { x: 120, y: 600 }, data: { label: 'HUG/SGI 가입', sublabel: '보증금 보호', status: 'safe' } },
+            { id: 'r3-risk', type: 'result', position: { x: 550, y: 600 }, data: { label: '미가입 위험', status: 'warning' } },
 
             // 종료
-            { id: 'end', type: 'startEnd', position: { x: 300, y: 820 }, data: { label: '입주 완료', type: 'end' } },
+            { id: 'end', type: 'startEnd', position: { x: 350, y: 700 }, data: { label: '입주 완료', type: 'end' } },
         ];
 
         const edges = [
-            // Phase 1
-            { id: 'e-s-p1', source: 'start', target: 'p1-1', type: 'smoothstep', style: { stroke: '#3b82f6', strokeWidth: 2 } },
-            { id: 'e-p1-1-2', source: 'p1-1', target: 'p1-2', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
-            { id: 'e-p1-2-3', source: 'p1-2', target: 'p1-3', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
-            { id: 'e-p1-3-d1', source: 'p1-3', target: 'd1', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
+            // 시작 → Phase 1 (수직)
+            { id: 'e-s-p1-2', source: 'start', target: 'p1-2', type: 'smoothstep', style: { stroke: '#3b82f6', strokeWidth: 2 } },
+
+            // Phase 1 수평 연결 (좌우)
+            { id: 'e-p1-2-1', source: 'p1-2', target: 'p1-1', sourceHandle: 'left', targetHandle: 'right', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
+            { id: 'e-p1-2-3', source: 'p1-2', target: 'p1-3', sourceHandle: 'right', targetHandle: 'left', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
+
+            // Phase 1 → 분기점 (수직)
+            { id: 'e-p1-2-d1', source: 'p1-2', target: 'd1', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
 
             // 분기 1
             {
@@ -131,29 +137,33 @@ const MainContractFlow = () => {
                 style: { stroke: '#ef4444', strokeWidth: 2 }, label: 'NO', labelStyle: { fill: '#ef4444', fontWeight: 600 }
             },
             {
-                id: 'e-d1-p2', source: 'd1', target: 'p2-1', sourceHandle: 'yes', type: 'smoothstep',
+                id: 'e-d1-p2', source: 'd1', target: 'p2-2', sourceHandle: 'yes', type: 'smoothstep',
                 style: { stroke: '#22c55e', strokeWidth: 2 }, label: 'YES', labelStyle: { fill: '#22c55e', fontWeight: 600 }
             },
 
-            // Phase 2
-            { id: 'e-p2-1-2', source: 'p2-1', target: 'p2-2', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
-            { id: 'e-p2-2-3', source: 'p2-2', target: 'p2-3', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
-            { id: 'e-p2-3-d2', source: 'p2-3', target: 'd2', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
+            // Phase 2 수평 연결 (좌우)
+            { id: 'e-p2-2-1', source: 'p2-2', target: 'p2-1', sourceHandle: 'left', targetHandle: 'right', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
+            { id: 'e-p2-2-3', source: 'p2-2', target: 'p2-3', sourceHandle: 'right', targetHandle: 'left', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
 
-            // 분기 2
+            // Phase 2 → 분기점 (수직)
+            { id: 'e-p2-2-d2', source: 'p2-2', target: 'd2', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
+
+            // 분기 2: 전세가율 - 초과(오른쪽), 이하(아래)
             {
                 id: 'e-d2-warn', source: 'd2', target: 'r2-warn', sourceHandle: 'no-right', type: 'smoothstep',
-                style: { stroke: '#f59e0b', strokeWidth: 2 }, label: 'NO', labelStyle: { fill: '#f59e0b', fontWeight: 600 }
+                style: { stroke: '#f59e0b', strokeWidth: 2 }, label: '초과', labelStyle: { fill: '#f59e0b', fontWeight: 600 }
             },
             {
-                id: 'e-d2-p3', source: 'd2', target: 'p3-1', sourceHandle: 'yes', type: 'smoothstep',
-                style: { stroke: '#22c55e', strokeWidth: 2 }, label: 'YES', labelStyle: { fill: '#22c55e', fontWeight: 600 }
+                id: 'e-d2-p3', source: 'd2', target: 'p3-2', sourceHandle: 'yes', type: 'smoothstep',
+                style: { stroke: '#22c55e', strokeWidth: 2 }, label: '이하', labelStyle: { fill: '#22c55e', fontWeight: 600 }
             },
 
-            // Phase 3
-            { id: 'e-p3-1-2', source: 'p3-1', target: 'p3-2', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
-            { id: 'e-p3-2-3', source: 'p3-2', target: 'p3-3', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
-            { id: 'e-p3-3-d3', source: 'p3-3', target: 'd3', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
+            // Phase 3 수평 연결 (좌우)
+            { id: 'e-p3-2-1', source: 'p3-2', target: 'p3-1', sourceHandle: 'left', targetHandle: 'right', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
+            { id: 'e-p3-2-3', source: 'p3-2', target: 'p3-3', sourceHandle: 'right', targetHandle: 'left', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
+
+            // Phase 3 → 분기점 (수직)
+            { id: 'e-p3-2-d3', source: 'p3-2', target: 'd3', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2 } },
 
             // 분기 3
             {
@@ -166,8 +176,7 @@ const MainContractFlow = () => {
             },
 
             // 종료
-            { id: 'e-p3-4-end', source: 'p3-4', target: 'end', type: 'smoothstep', style: { stroke: '#22c55e', strokeWidth: 2 } },
-            { id: 'e-r3-end', source: 'r3-risk', target: 'end', type: 'smoothstep', style: { stroke: '#64748b', strokeWidth: 2, strokeDasharray: '5,5' } },
+            { id: 'e-d3-end', source: 'd3', target: 'end', sourceHandle: 'yes', type: 'smoothstep', style: { stroke: '#22c55e', strokeWidth: 2 } },
         ];
 
         return { nodes, edges };

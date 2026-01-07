@@ -119,3 +119,146 @@
         height: 350px;
     }
 }
+
+/* Force Graph Container */
+.force-graph-container {
+    height: 420px;
+    background: #f8fafc;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Radial Tree Container */
+.radial-tree-container {
+    height: 450px;
+    background: #f8fafc;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.radial-tree-container svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* vis-network Container */
+.vis-network-container {
+    height: 450px;
+    background: #f8fafc;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+/* Icon Background Colors */
+.card-icon.force-bg {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.card-icon.radial-bg {
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+}
+
+.card-icon.vis-bg {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+}
+
+/* Network Comparison Layout */
+.network-comparison {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+/* Horizontal Tree Container */
+.horizontal-tree-container {
+    height: 450px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.horizontal-tree-container svg {
+    width: 100%;
+    height: 100%;
+}
+
+.card-icon.tree-bg {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+/* Network Relation Graph Container */
+.network-graph-container {
+    height: 450px;
+    background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.network-graph-container svg {
+    width: 100%;
+    height: 100%;
+}
+
+.card-icon.network-bg {
+    background: linear-gradient(135deg, #475569, #334155);
+}
+
+/* Visualization Tabs */
+.viz-tabs {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 8px;
+}
+
+.viz-tab {
+    padding: 6px 12px;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.viz-tab:hover {
+    color: #3b82f6;
+}
+
+.viz-tab.active {
+    background: white;
+    color: #3b82f6;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Network Visualization Container */
+.network-viz-container {
+    height: 420px;
+    background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.network-viz-container svg {
+    width: 100%;
+    height: 100%;
+}

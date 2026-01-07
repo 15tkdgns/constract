@@ -11,10 +11,14 @@
   "dependencies": {
     "@xyflow/react": "^12.0.0",
     "chart.js": "^4.4.0",
+    "d3": "^7.9.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-decision-tree-flow": "^2.1.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-force-graph-2d": "^1.29.0",
+    "vis-data": "^8.0.3",
+    "vis-network": "^10.0.2"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.0",

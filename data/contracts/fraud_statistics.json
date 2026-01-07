@@ -1,0 +1,168 @@
+{
+    "metadata": {
+        "source": "국토교통부, HUG, 공공데이터포털",
+        "lastUpdated": "2025-06-26",
+        "description": "전세 사기 피해 통계 데이터"
+    },
+    "victimStats": {
+        "totalVictims": 30000,
+        "totalDamage": 2300000000000,
+        "recoveryRate": 46.7,
+        "avgUnrecoveredAmount": 70000000
+    },
+    "victimsByAge": [
+        {
+            "ageGroup": "20대 이하",
+            "percentage": 26.25
+        },
+        {
+            "ageGroup": "30대",
+            "percentage": 48.11
+        },
+        {
+            "ageGroup": "40대",
+            "percentage": 15.64
+        },
+        {
+            "ageGroup": "50대 이상",
+            "percentage": 10.0
+        }
+    ],
+    "victimsByRegion": [
+        {
+            "region": "서울",
+            "percentage": 25.0
+        },
+        {
+            "region": "경기",
+            "percentage": 25.0
+        },
+        {
+            "region": "인천",
+            "percentage": 10.3
+        },
+        {
+            "region": "대전",
+            "percentage": 11.7
+        },
+        {
+            "region": "부산",
+            "percentage": 10.9
+        },
+        {
+            "region": "기타",
+            "percentage": 17.1
+        }
+    ],
+    "victimsByDeposit": [
+        {
+            "range": "1억원 이하",
+            "percentage": 41.9
+        },
+        {
+            "range": "1~2억원",
+            "percentage": 42.3
+        },
+        {
+            "range": "2~3억원",
+            "percentage": 13.3
+        },
+        {
+            "range": "3억원 초과",
+            "percentage": 2.5
+        }
+    ],
+    "victimsByPropertyType": [
+        {
+            "type": "다세대주택",
+            "percentage": 30.3
+        },
+        {
+            "type": "오피스텔",
+            "percentage": 20.8
+        },
+        {
+            "type": "다가구",
+            "percentage": 17.8
+        },
+        {
+            "type": "아파트",
+            "percentage": 14.2
+        },
+        {
+            "type": "기타",
+            "percentage": 16.9
+        }
+    ],
+    "fraudTypes": [
+        {
+            "type": "무자본 갭투자형",
+            "percentage": 48,
+            "description": "보증금으로 여러 채 매입 후 반환 불가"
+        },
+        {
+            "type": "선순위 권리 과다",
+            "percentage": 43,
+            "description": "근저당/선순위 임차인 과다로 회수 불가"
+        },
+        {
+            "type": "가짜 임대인",
+            "percentage": 5,
+            "description": "소유자가 아닌 자가 계약 체결"
+        },
+        {
+            "type": "이중계약",
+            "percentage": 4,
+            "description": "동일 물건에 복수 계약"
+        }
+    ],
+    "riskIndicators": [
+        {
+            "indicator": "전세가율 80% 이상",
+            "riskLevel": "high",
+            "weight": 30
+        },
+        {
+            "indicator": "임대인 다주택자",
+            "riskLevel": "medium",
+            "weight": 15
+        },
+        {
+            "indicator": "근저당 설정액 과다",
+            "riskLevel": "high",
+            "weight": 25
+        },
+        {
+            "indicator": "보증보험 가입 불가",
+            "riskLevel": "high",
+            "weight": 20
+        },
+        {
+            "indicator": "신축 빌라/오피스텔",
+            "riskLevel": "medium",
+            "weight": 10
+        }
+    ],
+    "yearlyTrend": [
+        {
+            "year": 2021,
+            "victims": 500,
+            "damage": 50000000000
+        },
+        {
+            "year": 2022,
+            "victims": 2000,
+            "damage": 200000000000
+        },
+        {
+            "year": 2023,
+            "victims": 15000,
+            "damage": 1500000000000
+        },
+        {
+            "year": 2024,
+            "victims": 25000,
+            "damage": 2300000000000
+        }
+    ]
+}
